@@ -96,7 +96,7 @@
         "package.json"
     ],
     "lint-staged": {
-        "**.{js,jsx,ts,tsx}": [
+        "src/**/.{js,jsx,ts,tsx}": [
             "eslint --fix",
             "prettier --config .prettierrc --write"
         ],
