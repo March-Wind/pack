@@ -14,4 +14,5 @@ const sum = (num1: number, num2: number) => {
 
 console.log(sum(1, 2), merge);
 const a = 1;
-var b  = 2;
+const b = 2;
+const bc = 2;
