@@ -1,4 +1,4 @@
-import { requirePackage } from '../../utils'
+import { requirePackage } from '../../utils';
 export default {
   // root: path.resolve(__dirname, '../../../node_modules'),
   // rootMode: "upward",
@@ -6,25 +6,20 @@ export default {
   //     privateFieldsAsProperties: true,
   // },
   // browserslistConfigFile: path.resolve(__dirname, './.browserslistrc'),
-  "presets": [
+  presets: [
     [
       // "@babel/preset-env", // 在link时不能正确找到才用相对路经去寻找
-      requirePackage("@babel/preset-env"),
+      requirePackage('@babel/preset-env'),
       {
-        "modules": false,
-        "useBuiltIns": "usage", // 代替 "@babel/plugin-transform-runtime"配置
-        "corejs": 3,
-      }
+        modules: false,
+        useBuiltIns: 'usage', // 代替 "@babel/plugin-transform-runtime"配置
+        corejs: 3,
+      },
     ],
-    [
-      requirePackage("@babel/preset-typescript")
-    ],
-    [
-      requirePackage("@babel/preset-react")
-    ],
-
+    [requirePackage('@babel/preset-typescript')],
+    [requirePackage('@babel/preset-react')],
   ],
-  "plugins": [
+  plugins: [
     // [
     //     "@babel/plugin-transform-runtime",
     //     {
@@ -34,7 +29,7 @@ export default {
     [
       // '@babel/plugin-proposal-decorators',
       requirePackage('@babel/plugin-proposal-decorators'),
-      { legacy: true } // 装饰器语法处理
+      { legacy: true }, // 装饰器语法处理
     ],
     [
       requirePackage('@babel/plugin-proposal-class-properties'),
@@ -45,10 +40,13 @@ export default {
       // '@babel/plugin-proposal-object-rest-spread' // 对象rest、spread语法处理
       requirePackage('@babel/plugin-proposal-object-rest-spread'),
     ],
+    // [
+    //   requirePackage('@babel/plugin-syntax-top-level-await'),
+    // ]
     // "@babel/plugin-syntax-dynamic-import"
     // requirePackage("@babel/plugin-syntax-dynamic-import"),
-  ]
-}
+  ],
+};
 
 /***
  *

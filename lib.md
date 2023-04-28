@@ -1,3 +1,7 @@
+1. 先运行@marchyang/create-node-app
+
+2. 安装下面这些东西
+
 npm i -D @babel/cli @babel/core babel-loader core-js @babel/preset-env @babel/preset-react @babel/preset-typescript @babel/plugin-proposal-class-properties @babel/plugin-proposal-decorators @babel/plugin-proposal-object-rest-spread @babel/plugin-syntax-dynamic-import @babel/plugin-transform-runtime
 thread-loader
 

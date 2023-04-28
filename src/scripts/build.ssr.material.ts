@@ -1,8 +1,8 @@
 process.env.NODE_ENV = 'production';
-import './initConfig'
+import './initConfig';
 import webpack from 'webpack';
 import config from '../webpack/config/build.ssr.material';
-const chalk = require('chalk');
+import chalk from 'chalk';
 // process.env.AUTOPREFIXER = 'production';
 
 webpack(config, (err, stats) => {
@@ -15,8 +15,7 @@ webpack(config, (err, stats) => {
     if (stats.hasErrors()) {
       info.errors?.forEach((error) => {
         console.log(chalk.red(error.message));
-      })
-
+      });
     }
   }
 });

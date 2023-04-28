@@ -1,7 +1,9 @@
+process.env.NODE_ENV = 'production';
+import './initConfig';
 import webpack from 'webpack';
-import config from '../webpack/config/build.webpack';
+import config from '../webpack/config/build.node';
 import chalk from 'chalk';
-// import fs from 'fs';
+// process.env.AUTOPREFIXER = 'production';
 
 webpack(config, (err, stats) => {
   if (err) {
@@ -10,7 +12,6 @@ webpack(config, (err, stats) => {
   }
   if (stats) {
     const info = stats.toJson();
-    // fs.writeFileSync('./stats.json', JSON.stringify(info)) //分析网站：http://webpack.github.io/analyse/
     if (stats.hasErrors()) {
       info.errors?.forEach((error) => {
         console.log(chalk.red(error.message));

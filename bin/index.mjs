@@ -49,22 +49,21 @@ const _mode = mode.replace(":", "_");
 const globalVar = `TS_NODE_PROJECT=${tsConfig2} PROJECT_CONFIG=${config} NODE_ENV=${env} NODE_MODULES_PATH=${nodeModule} MODE=${_mode}`;
 const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --loader ts-node/esm`;
 const modeMapFile = {
-  "dev:web": resolve(__dirname, "../src/scripts/dev.ts"),
+  "dev:web": resolve(__dirname, "../src/scripts/dev.web.ts"),
   "build:spa": resolve(__dirname, "../src/scripts/build.spa.ts"),
   "build:ssr": resolve(__dirname, "../src/scripts/build.ssr.ts"),
+  "dev:node": resolve(process.cwd(), 'src/index.ts'),
+  "build:node": resolve(__dirname, "../src/scripts/build.node.ts"),
 }
 const execFile = modeMapFile[mode];
 // throw new Error("暂时没有build:offline");
 if (execFile) {
-  console.log(22, `${globalVar} node ${nodeParams} ${execFile}`)
   shell.exec(
     `${globalVar} node ${nodeParams} ${execFile}`
   );
-
   // shell.exec(
   //   `${globalVar} node ${nodeParams}  ${execFile}`
   // );
 } else {
   throw new Error("没有对应的mode");
-
 }
