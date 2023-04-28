@@ -15,8 +15,12 @@
         "eslint": "eslint ./src --fix",
         "test": "jest --passWithNoTests"
     },
-    "author": "",
-    "license": "ISC",
+    "author": "marchyang",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/March-Wind/web-pack.git"
+    },
     "devDependencies": {
         "@babel/cli": "^7.21.0",
         "@babel/core": "^7.21.4",
