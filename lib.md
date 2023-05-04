@@ -12,3 +12,6 @@ npm i -D autoprefixer css-loader fast-css-loader fast-sass-loader file-loader is
 npm i -D webpack webpack-cli webpack-dev-server webpack-manifest-plugin webpack-merge webpack-sources webpack-node-externals html-webpack-plugin
 
 npm i -D @types/html-webpack-plugin @types/webpack-dev-server @types/webpack-manifest-plugin @types/webpack-merge @types/webpack-node-externals @types/mini-css-extract-plugin @types/postcss-flexbugs-fixes
+
+
+
