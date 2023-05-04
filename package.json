@@ -1,6 +1,6 @@
 {
     "name": "@marchyang/pack",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "",
     "main": "./dist/index.js",
     "bin": {
@@ -25,11 +25,6 @@
 
     },
     "type": "module",
-    "files": [
-        "dist/*",
-        "*.md",
-        "package.json"
-    ],
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx}": [
             "eslint --fix",
