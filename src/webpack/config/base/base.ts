@@ -1,11 +1,13 @@
 import webpack from 'webpack';
 import { resolve } from 'path';
+import dotenv from 'dotenv';
 // import IMake from '../../plugin/make'
 // import IEmit from '../../plugin/emit'
 import IThisCompilation from '../../plugin/setBuildTime';
 const config = global.project_config;
 console.log(222, global.project_config);
 const { globalVariable = {} } = config;
+const dotenvVariable = dotenv.config().parsed;
 const webacpkConfog: webpack.Configuration = {
   experiments: {
     topLevelAwait: true, // 顶级作用域使用await
@@ -41,7 +43,10 @@ const webacpkConfog: webpack.Configuration = {
   },
   module: {},
   plugins: [
-    new webpack.DefinePlugin(globalVariable),
+    new webpack.DefinePlugin({
+      ...dotenvVariable,
+      ...globalVariable,
+    }),
     // new IMake()
     // new IEmit()
     new IThisCompilation(),

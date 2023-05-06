@@ -45,9 +45,10 @@ const tsNodeESM = resolve(__dirname, "../node_modules/ts-node/esm");
 // const tsConfig = resolve(__dirname, "../src/webpack/tsconfig.json");
 const tsConfig2 = resolve(__dirname, "../tsconfig.json");
 const nodeModule = resolve(__dirname, "../node_modules");
+const preload = resolve(__dirname, './preload.cjs')
 const _mode = mode.replace(":", "_");
 const globalVar = `TS_NODE_PROJECT=${tsConfig2} PROJECT_CONFIG=${config} NODE_ENV=${env} NODE_MODULES_PATH=${nodeModule} MODE=${_mode}`;
-const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --loader ts-node/esm`;
+const nodeParams = `${debug ? '--inspect-brk=9222' : ''}${mode === 'dev:node' ? ` -r ${preload}` : ''} --loader ts-node/esm`;
 const modeMapFile = {
   "dev:web": resolve(__dirname, "../src/scripts/dev.web.ts"),
   "build:spa": resolve(__dirname, "../src/scripts/build.spa.ts"),
