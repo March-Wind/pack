@@ -6,6 +6,7 @@ import webpackModuleConfig from './base/module';
 import { defaultOutput } from './contant';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import nodeExternals from 'webpack-node-externals';
+import optimizationConfig from './base/optimization';
 
 const config = global.project_config;
 const ssrConfig: webpack.Configuration = {
@@ -42,5 +43,5 @@ const ssrConfig: webpack.Configuration = {
   ],
 };
 
-const webpackConfig = merge(webpackBaseConfig, webpackModuleConfig, ssrConfig);
+const webpackConfig = merge(webpackBaseConfig, webpackModuleConfig, optimizationConfig, ssrConfig);
 export default webpackConfig;

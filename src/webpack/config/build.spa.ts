@@ -3,23 +3,22 @@ import path from 'path';
 import { merge, mergeWithRules, customizeArray } from 'webpack-merge';
 import webpackBaseConfig from './base/base';
 import webpackModuleConfig from './base/module';
-import { defaultOutput } from './contant'
-import optimizationConfig from './base/optimization'
+import optimizationConfig from './base/optimization';
+import { defaultOutput } from './contant';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import setRemScript from '../plugin/setRemCode';
-import Manifest from '../plugin/webpack-manifest-plugin'
+import Manifest from '../plugin/webpack-manifest-plugin';
 // import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
-import debugConfog from './base/debug';
+import debugConfig from './base/debug';
 
 // const smp = new SpeedMeasurePlugin();
 // import { resolve } from 'path/posix';
 // debugger
 const config = global.project_config;
 const { remotePublic } = config;
-debugger
+debugger;
 const spaConfig: webpack.Configuration = {
-
   entry: config.entry,
   mode: 'production',
   devtool: 'source-map',
@@ -36,7 +35,7 @@ const spaConfig: webpack.Configuration = {
     // chunkIds: "named", // 按照路经命名，用于调试模式
     removeEmptyChunks: true,
     mergeDuplicateChunks: true,
-    runtimeChunk: "single", // 运行时需要的代码单独抽离到一个文件
+    runtimeChunk: 'single', // 运行时需要的代码单独抽离到一个文件
 
     splitChunks: {
       chunks: 'all',
@@ -100,26 +99,25 @@ const spaConfig: webpack.Configuration = {
       filename: 'index.html',
       template: `./index.html`,
       // minify: true,
-      'meta': {
-        'viewport': 'width=device-width, initial-scale=1, shrink-to-fit=no',
+      meta: {
+        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
         // Will generate: <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        'theme-color': '#4285f4'
+        'theme-color': '#4285f4',
         // Will generate: <meta name="theme-color" content="#4285f4">
       },
-      setRemScript
+      setRemScript,
     }),
     // new Manifest({
     //     generate: (seed, files, entries) => {
     //         return entries['main']
     //     }
     // })
-  ]
-}
+  ],
+};
 // );
 
-
-const webpackConfig = merge(webpackBaseConfig, webpackModuleConfig, spaConfig, debugConfog);
-debugger
+const webpackConfig = merge(webpackBaseConfig, webpackModuleConfig, spaConfig, debugConfig, optimizationConfig);
+debugger;
 // // 合并rules 主要是合并js/jsx、ts/tsx语言的编译
 // webpackConfig = mergeWithRules({
 //     module: {

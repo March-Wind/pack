@@ -30,7 +30,7 @@ const defaultOptionsMap = {
   },
 };
 const defaultOptions = defaultOptionsMap[process.env.MODE as keyof typeof defaultOptionsMap];
-const content = readJsFileSnyc(path.resolve(process.cwd(), `pack.${process.env.MODE}.js`));
+const content = readJsFileSnyc(path.resolve(process.cwd(), `pack.config.cjs`));
 if (isObject(content)) {
   global.project_config = {
     ...defaultOptions,
