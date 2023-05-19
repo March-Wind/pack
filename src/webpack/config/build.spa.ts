@@ -95,7 +95,7 @@ const spaConfig: webpack.Configuration = {
       ignoreOrder: false,
     }),
     new HtmlWebpackPlugin({
-      title: 'template',
+      title: config.title || '',
       filename: 'index.html',
       template: `./index.html`,
       // minify: true,

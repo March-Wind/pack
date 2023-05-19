@@ -40,7 +40,7 @@ const optimizationConfig: webpack.Configuration = {
       ...config.alias,
     },
   },
-  cache, // 持久化缓存
+  // cache, // 持久化缓存
   optimization: {
     // 手动开始tree shaking, 当mode: 'production'，默认进行tree shaking
     // usedExports: true, // 开启优化（树摇但保留代码）

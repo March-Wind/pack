@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 // import IEmit from '../../plugin/emit'
 import IThisCompilation from '../../plugin/setBuildTime';
 const config = global.project_config;
-console.log(222, global.project_config);
 const { globalVariable = {} } = config;
 const dotenvVariable = dotenv.config().parsed;
 const webacpkConfog: webpack.Configuration = {
