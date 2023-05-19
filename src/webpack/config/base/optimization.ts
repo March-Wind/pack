@@ -1,26 +1,28 @@
-import webpack from 'webpack';
 import path from 'path';
-import { requirePackage } from '../../utils';
-
+import fs from 'fs';
+import webpack from 'webpack';
+// import { requirePackage } from '../../utils';
+import { createEnvironmentHash } from '../../utils';
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import babelConfig from './babel.config';
 const config = global.project_config;
-
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = (relativePath: string) => path.resolve(appDirectory, relativePath);
 // import DllReferencePlugin from 'webpack/lib/DllReferencePlugin'
 // import SpeedMeasurePlugin from 'speed-measure-webpack-plugin'
 // const smp = new SpeedMeasurePlugin();
 
 const isDev = process.env.NODE_ENV === 'development';
 
-let cache: webpack.Configuration['cache'] = {
-  type: 'filesystem',
-  // cacheDirectory: "node_modules/.cache/webpack", // 默认就是这个
-};
-if (isDev) {
-  cache = {
-    type: 'memory',
-  };
-}
+// let cache: webpack.Configuration['cache'] = {
+//   type: 'filesystem',
+//   // cacheDirectory: "node_modules/.cache/webpack", // 默认就是这个
+// };
+// if (isDev) {
+//   cache = {
+//     type: 'memory',
+//   };
+// }
 
 // const isAnalyzer: webpack.Configuration = {
 //     stats: 'normal', // Node APi 第二个参数是stats,可以直接输出stats.json文件用来分析：分析网站：http://webpack.github.io/analyse/
@@ -41,6 +43,19 @@ const optimizationConfig: webpack.Configuration = {
     },
   },
   // cache, // 持久化缓存
+  cache: {
+    type: 'filesystem',
+    version: createEnvironmentHash({ mode: process.env.MODE }),
+    cacheDirectory: resolveApp('node_modules/.cache'),
+    store: 'pack',
+    // buildDependencies: {
+    //   defaultWebpack: ['webpack/lib/'],
+    //   config: [__filename],
+    //   tsconfig: [paths.appTsConfig, paths.appJsConfig].filter(f =>
+    //     fs.existsSync(f)
+    //   ),
+    // },
+  },
   optimization: {
     // 手动开始tree shaking, 当mode: 'production'，默认进行tree shaking
     // usedExports: true, // 开启优化（树摇但保留代码）

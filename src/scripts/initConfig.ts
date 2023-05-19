@@ -39,5 +39,3 @@ if (isObject(content)) {
 } else {
   global.project_config = defaultOptions;
 }
-
-console.log(2223, global.project_config);

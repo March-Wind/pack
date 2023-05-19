@@ -10,6 +10,7 @@ import setRemScript from '../plugin/setRemCode';
 import { Configuration } from 'webpack-dev-server';
 import { defaultOutput } from './contant';
 const config = global.project_config;
+
 const devConfig: webpack.Configuration & Configuration = {
   // entry: './src/index.tsx',
   entry: config.entry,
@@ -18,7 +19,6 @@ const devConfig: webpack.Configuration & Configuration = {
     filename: '[name].[contenthash].js',
     path: path.resolve(process.cwd(), defaultOutput), // /${projectConfig.name}
   },
-  cache: false, // webpack-dev-server是使用内存缓存的，不能和cache连用
   devServer: {
     // 安装@types/webpack-dev-server
     host: '127.0.0.1',
@@ -54,13 +54,18 @@ const devConfig: webpack.Configuration & Configuration = {
         warnings: false,
       },
     },
+    static: {
+      watch: {
+        ignored: /node_modules/,
+      },
+    },
   },
   // 如果在这个时间内没有再次修改文件，webpack-dev-server 就会认为这个文件已经更新完毕
-  watchOptions: {
-    ignored: /node_modules/,
-    aggregateTimeout: 300,
-    poll: 1000,
-  },
+  // watchOptions: {
+  //   ignored: /node_modules/,
+  //   aggregateTimeout: 300,
+  //   poll: 1000,
+  // },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
