@@ -17,8 +17,11 @@ const devConfig: webpack.Configuration & Configuration = {
   mode: 'development',
   output: {
     filename: '[name].[contenthash].js',
-    path: path.resolve(process.cwd(), defaultOutput), // /${projectConfig.name}
+    path: defaultOutput, // /${projectConfig.name}
+    // publicPath: '/pack'
   },
+  target: 'web',
+
   devServer: {
     // 安装@types/webpack-dev-server
     host: '127.0.0.1',
@@ -30,14 +33,15 @@ const devConfig: webpack.Configuration & Configuration = {
     // watchContentBase: true, // 监听contentBase
     compress: true, // 启动gzip
     // historyApiFallback: true,// 所有失败的路径都执行index.html
-    // watchFiles: {
-    // paths: ['src/**/*'],
-    // options: {
-    //   poll: true
-    // }
+    watchFiles: {
+      paths: ['src/**/*'],
+      options: {
+        poll: true,
+      },
+    },
 
-    // },
     // aggregateTimeout:100,
+
     headers: {
       'Cache-Control': 'no-store',
     },
@@ -48,23 +52,23 @@ const devConfig: webpack.Configuration & Configuration = {
     //   colors:true
     // }
     client: {
+      progress: true,
       overlay: {
         // 覆盖页面错误
         errors: true,
         warnings: false,
       },
     },
-    static: {
-      watch: {
-        ignored: /node_modules/,
-      },
-    },
+    // static: {
+    //   directory: path.join(process.cwd(), 'src'),
+    //   watch: true,
+    // },
   },
   // 如果在这个时间内没有再次修改文件，webpack-dev-server 就会认为这个文件已经更新完毕
   // watchOptions: {
   //   ignored: /node_modules/,
-  //   aggregateTimeout: 300,
-  //   poll: 1000,
+  //   aggregateTimeout: 0,
+  //   // poll: 1000,
   // },
   plugins: [
     new MiniCssExtractPlugin({
@@ -76,6 +80,7 @@ const devConfig: webpack.Configuration & Configuration = {
       filename: 'index.html',
       template: `./index.html`,
       // minify: true,
+      cache: false,
       meta: {
         viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
         // Will generate: <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -84,6 +89,9 @@ const devConfig: webpack.Configuration & Configuration = {
       },
       // setRemScript,
     }),
+    // new webpack.ProvidePlugin({
+    //   process: 'process/browser.js',
+    // }),
   ],
 };
 

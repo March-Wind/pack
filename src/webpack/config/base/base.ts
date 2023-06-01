@@ -30,6 +30,9 @@ const webacpkConfog: webpack.Configuration = {
     // 新增性能优化
     maxEntrypointSize: 3072000, // 入口文件大小，推荐244k
   },
+  stats: {
+    colors: true,
+  },
   optimization: {
     concatenateModules: true,
     runtimeChunk: true,

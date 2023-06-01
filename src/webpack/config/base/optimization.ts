@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
+import { fileURLToPath } from 'url';
 // import { requirePackage } from '../../utils';
 import { createEnvironmentHash } from '../../utils';
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
@@ -13,7 +14,7 @@ const resolveApp = (relativePath: string) => path.resolve(appDirectory, relative
 // const smp = new SpeedMeasurePlugin();
 
 const isDev = process.env.NODE_ENV === 'development';
-
+const __filename = fileURLToPath(import.meta.url);
 // let cache: webpack.Configuration['cache'] = {
 //   type: 'filesystem',
 //   // cacheDirectory: "node_modules/.cache/webpack", // 默认就是这个
@@ -42,25 +43,26 @@ const optimizationConfig: webpack.Configuration = {
       ...config.alias,
     },
   },
-  // cache, // 持久化缓存
+  // cache: false, // 持久化缓存
   cache: {
     type: 'filesystem',
     version: createEnvironmentHash({ mode: process.env.MODE }),
     cacheDirectory: resolveApp('node_modules/.cache'),
     store: 'pack',
     // buildDependencies: {
-    //   defaultWebpack: ['webpack/lib/'],
-    //   config: [__filename],
-    //   tsconfig: [paths.appTsConfig, paths.appJsConfig].filter(f =>
-    //     fs.existsSync(f)
-    //   ),
+    // defaultWebpack: ['webpack/lib/'],
+    // config: [__filename],
+    // tsconfig: [paths.appTsConfig, paths.appJsConfig].filter(f =>
+    //   fs.existsSync(f)
+    // ),
     // },
   },
-  optimization: {
-    // 手动开始tree shaking, 当mode: 'production'，默认进行tree shaking
-    // usedExports: true, // 开启优化（树摇但保留代码）
-    // minimize: true, // 开启压缩 (删除未使用代码)
-  },
+  // optimization: {
+  //   // 手动开始tree shaking, 当mode: 'production'，默认进行tree shaking
+  //   // usedExports: true, // 开启优化（树摇但保留代码）
+  //   // minimize: true, // 开启压缩 (删除未使用代码)
+  //   runtimeChunk: 'single',
+  // },
   // module: {
   //     rules: [
   //         {
