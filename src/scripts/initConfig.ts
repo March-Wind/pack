@@ -18,7 +18,7 @@ const defaultOptionsMap = {
     entry: './src/app.ts',
   },
   build_node: {
-    entry: './src/index.ts',
+    entry: './src/app.ts',
   },
   ['ssr-material']: {
     entry: {
