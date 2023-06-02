@@ -1,7 +1,14 @@
 {
     "name": "@marchyang/pack",
-    "version": "0.1.5",
-    "description": "",
+    "version": "0.1.6",
+    "keywords": [
+        "web development",
+        "node development",
+        "bundling web",
+        "bundling node",
+        "typescript"
+    ],
+    "description": "A project that supports local development and bundling features for web and node environments, with TypeScript support. It enables efficient development and deployment of web and node applications using modern development practices.",
     "main": "./dist/index.js",
     "bin": {
         "pack2": "./bin/index.mjs"
