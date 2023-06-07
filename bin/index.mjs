@@ -53,7 +53,7 @@ const modeMapFile = {
   "dev:web": resolve(__dirname, "../src/scripts/dev.web.ts"),
   "build:spa": resolve(__dirname, "../src/scripts/build.spa.ts"),
   "build:ssr": resolve(__dirname, "../src/scripts/build.ssr.ts"),
-  "dev:node": resolve(process.cwd(), 'src/index.ts'),
+  "dev:node": resolve(process.cwd(), 'src/app.ts'),
   "build:node": resolve(__dirname, "../src/scripts/build.node.ts"),
 }
 const execFile = modeMapFile[mode];
