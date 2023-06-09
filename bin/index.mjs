@@ -59,7 +59,7 @@ const modeMapFile = {
 const execFile = modeMapFile[mode];
 // throw new Error("暂时没有build:offline");
 if (execFile) {
-  console.log(`${globalVar} node ${nodeParams} ${execFile}`);
+  // console.log(`${globalVar} node ${nodeParams} ${execFile}`);
   shell.exec(
     `${globalVar} node ${nodeParams} ${execFile}`
   );
