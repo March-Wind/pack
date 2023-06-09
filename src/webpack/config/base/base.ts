@@ -7,7 +7,7 @@ import IThisCompilation from '../../plugin/setBuildTime';
 const config = global.project_config;
 const { globalVariable = {} } = config;
 const NODE_ENV = process.env.NODE_ENV;
-const _path = resolve(process.cwd(), `.env.${process.env.DOT_ENV}`);
+const _path = process.env.DOT_ENV ? resolve(process.cwd(), `.env.${process.env.DOT_ENV}`) : undefined;
 const dotenvVariable = dotenv.config({ path: _path }).parsed;
 
 const definedVariable = Object.keys({ ...dotenvVariable, ...globalVariable }).reduce((prev, next) => {

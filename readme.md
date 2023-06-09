@@ -28,6 +28,10 @@ Supports local development and bundling features for both web and node environme
 | dev:node   | src/app.ts  |
 | build:node | src/app.ts  |
 
+## Support
+
+1. Support `dotenv` and differentiate between environments, using ` --DOT_ENV=test` will load the `. env. test` file
+
 ## Notes:
 
 1. The entry file names are case-sensitive, otherwise hot reloading will not work in development mode.
