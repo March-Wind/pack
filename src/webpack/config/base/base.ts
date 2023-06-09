@@ -6,8 +6,16 @@ import dotenv from 'dotenv';
 import IThisCompilation from '../../plugin/setBuildTime';
 const config = global.project_config;
 const { globalVariable = {} } = config;
-const dotenvVariable = dotenv.config().parsed;
-const webacpkConfog: webpack.Configuration = {
+const NODE_ENV = process.env.NODE_ENV;
+const _path = resolve(process.cwd(), `.env.${process.env.DOT_ENV}`);
+const dotenvVariable = dotenv.config({ path: _path }).parsed;
+
+const definedVariable = Object.keys({ ...dotenvVariable, ...globalVariable }).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify({ ...dotenvVariable, ...globalVariable }[next]);
+  return prev;
+}, {} as Record<string, any>);
+const webpackConfig: webpack.Configuration = {
+  mode: NODE_ENV,
   experiments: {
     topLevelAwait: true, // 顶级作用域使用await
     asyncWebAssembly: true, // 同步加载wasm
@@ -45,14 +53,11 @@ const webacpkConfog: webpack.Configuration = {
   },
   module: {},
   plugins: [
-    new webpack.DefinePlugin({
-      ...dotenvVariable,
-      ...globalVariable,
-    }),
+    new webpack.DefinePlugin(definedVariable),
     // new IMake()
     // new IEmit()
     new IThisCompilation(),
   ],
 };
 
-export default webacpkConfog;
+export default webpackConfig;

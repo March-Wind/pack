@@ -14,7 +14,7 @@ const config = global.project_config;
 const devConfig: webpack.Configuration & Configuration = {
   // entry: './src/index.tsx',
   entry: config.entry,
-  mode: 'development',
+  // mode: 'development',
   output: {
     filename: '[name].[contenthash].js',
     path: defaultOutput, // /${projectConfig.name}

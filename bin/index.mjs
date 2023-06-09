@@ -28,17 +28,23 @@ argv.option([
     description: "debug webpack",
     example: "'script --debug=value' or 'script -d value'",
   }, {
-    name: "env",
+    name: "NODE_ENV",
     short: "e",
     type: "string",
     description: "web-pack run in devlopment or production",
-    example: "'script --env=value' or 'script -e value'",
+    example: "'script --NODE_ENV=value' or 'script -e value'",
+  }, {
+    name: "DOT_ENV",
+    short: "de",
+    type: "string",
+    description: "The environment in which the project is located",
+    example: "'script --DOT_ENV=value' or 'script -pe value'",
   }
 ]);
 
 const args = argv.run();
 const {
-  options: { mode, config, debug = false, env = 'production' },
+  options: { mode, config, debug = false, NODE_ENV: env, DOT_ENV = 'production' },
 } = args;
 const tsNode = resolve(__dirname, "../node_modules/ts-node/register");
 const tsNodeESM = resolve(__dirname, "../node_modules/ts-node/esm");
@@ -47,25 +53,36 @@ const tsConfig2 = resolve(__dirname, "../tsconfig.json");
 const nodeModule = resolve(__dirname, "../node_modules");
 const preload = resolve(__dirname, './preload.cjs')
 const _mode = mode.replace(":", "_");
-const globalVar = `TS_NODE_PROJECT=${tsConfig2} PROJECT_CONFIG=${config} NODE_ENV=${env} NODE_MODULES_PATH=${nodeModule} MODE=${_mode}`;
-const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --experimental-wasm-modules ${mode === 'dev:node' ? `-r ${preload}` : ''} --loader ts-node/esm`;
-const modeMapFile = {
-  "dev:web": resolve(__dirname, "../src/scripts/dev.web.ts"),
-  "build:spa": resolve(__dirname, "../src/scripts/build.spa.ts"),
-  "build:ssr": resolve(__dirname, "../src/scripts/build.ssr.ts"),
-  "dev:node": resolve(process.cwd(), 'src/app.ts'),
-  "build:node": resolve(__dirname, "../src/scripts/build.node.ts"),
+
+const modeMapConfig = {
+  "dev:web": {
+    NODE_ENV: 'development',
+    file: resolve(__dirname, "../src/scripts/dev.web.ts"),
+  },
+  "build:spa": {
+    NODE_ENV: 'production',
+    file: resolve(__dirname, "../src/scripts/build.spa.ts"),
+  },
+  "build:ssr": {
+    NODE_ENV: 'production',
+    file: resolve(__dirname, "../src/scripts/build.ssr.ts"),
+  },
+  "dev:node": {
+    NODE_ENV: 'development',
+    file: resolve(process.cwd(), 'src/app.ts'),
+  },
+  "build:node": {
+    NODE_ENV: 'production',
+    file: resolve(__dirname, "../src/scripts/build.node.ts"),
+  }
 }
-const execFile = modeMapFile[mode];
-// throw new Error("暂时没有build:offline");
-if (execFile) {
-  // console.log(`${globalVar} node ${nodeParams} ${execFile}`);
-  shell.exec(
-    `${globalVar} node ${nodeParams} ${execFile}`
-  );
-  // shell.exec(
-  //   `${globalVar} node ${nodeParams}  ${execFile}`
-  // );
-} else {
+const execConfig = modeMapConfig[mode];
+if (!execConfig) {
   throw new Error("没有对应的mode");
 }
+const { file, NODE_ENV } = execConfig;
+const globalVar = `TS_NODE_PROJECT=${tsConfig2} PROJECT_CONFIG=${config} NODE_ENV=${env || NODE_ENV} NODE_MODULES_PATH=${nodeModule} MODE=${_mode} DOT_ENV=${DOT_ENV}`;
+const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --experimental-wasm-modules ${mode === 'dev:node' ? `-r ${preload}` : ''} --loader ts-node/esm`;
+shell.exec(
+  `${globalVar} node ${nodeParams} ${file}`
+);

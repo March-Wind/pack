@@ -13,6 +13,7 @@ const server = new webpackServer(config.devServer as Configuration, compiler);
 server
   .start()
   .then((res) => {
+    // to practice dev:web模式下的终端有很多输出时不时因为这里
     console.log(res);
   })
   .catch((error) => {

@@ -24,7 +24,7 @@ const ssrConfig: webpack.Configuration = {
   entry: config.entry,
   devtool: 'source-map',
   // mode: 'production',
-  mode: 'development',
+  // mode: 'development',
   target: 'node',
   output: {
     filename: '[name].js',

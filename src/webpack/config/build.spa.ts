@@ -20,7 +20,7 @@ const { remotePublic } = config;
 debugger;
 const spaConfig: webpack.Configuration = {
   entry: config.entry,
-  mode: 'production',
+  // mode: 'production',
   devtool: 'source-map',
   output: {
     filename: '[name].[contenthash].js',
