@@ -6,13 +6,10 @@ const webacpkConfog: webpack.Configuration = {
   output: {
     path: path.resolve(process.cwd(), `webpackBuild`),
   },
-  target: "node",
-  performance: { // 新增性能优化
+  target: 'node',
+  performance: {
+    // 新增性能优化
     maxEntrypointSize: 3072000, // 入口文件大小，推荐244k
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js', 'jsx'],
-    // symlinks: false
   },
   optimization: {
     concatenateModules: true,
@@ -29,16 +26,17 @@ const webacpkConfog: webpack.Configuration = {
       {
         test: /\.(js|ts|jsx|tsx)$/,
         exclude: /node_modules/,
-        use: [{
-          loader: "babel-loader",
-          options:
+        use: [
           {
-            ...babelConfig
-          }
-        }]
+            loader: 'babel-loader',
+            options: {
+              ...babelConfig,
+            },
+          },
+        ],
       },
-    ]
-  }
+    ],
+  },
 };
 
 // export default merge(webacpkConfog, debugConfog)

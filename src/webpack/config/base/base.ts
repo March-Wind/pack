@@ -24,8 +24,19 @@ const webpackConfig: webpack.Configuration = {
   resolve: {
     // modules: [resolve(process.cwd(), 'node_modules'), resolve(__dirname, '../../../node_modules')],
     modules: [resolve(process.cwd(), 'node_modules'), process.env.NODE_MODULES_PATH],
-
     extensions: ['.tsx', '.ts', '.js', 'jsx'],
+    /***
+     * 根据condition export 来选择优选哪种模块，https://nodejs.org/api/packages.html#conditional-exports
+     * 针对@dqbd/tiktoken包package.json里面这种配置，将优先使用tiktoken.js，也就是default。
+     *   "exports": {
+     *     ".": {
+     *       "types": "./tiktoken.d.ts",
+     *       "edge-light": "./tiktoken.js",
+     *       "node": "./tiktoken.cjs",
+     *       "default": "./tiktoken.js"
+     *    }
+     */
+    conditionNames: ['import', 'require'],
     // symlinks: false
   },
   resolveLoader: {
