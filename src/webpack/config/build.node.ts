@@ -20,6 +20,9 @@ const ssrConfig: webpack.Configuration = {
     path: defaultOutput,
     clean: true,
   },
+  resolve: {
+    conditionNames: ['import', 'require'],
+  },
   // externals: [nodeExternals()], // 为了不把node_modules目录下的第三方模块打包进输出文件中,因为nodejs默认会去node_modules目录下去寻找和使用第三方模块。
   module: {
     parser: {

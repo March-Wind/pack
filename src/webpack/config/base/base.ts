@@ -36,7 +36,7 @@ const webpackConfig: webpack.Configuration = {
      *       "default": "./tiktoken.js"
      *    }
      */
-    conditionNames: ['import', 'require'],
+
     // symlinks: false
   },
   resolveLoader: {
