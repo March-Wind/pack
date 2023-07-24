@@ -15,13 +15,13 @@ const devConfig: webpack.Configuration & Configuration = {
   // entry: './src/index.tsx',
   entry: config.entry,
   // mode: 'development',
+  devtool: 'source-map',
   output: {
     filename: '[name].[contenthash].js',
     path: defaultOutput, // /${projectConfig.name}
     // publicPath: '/pack'
   },
   target: 'web',
-
   devServer: {
     // 安装@types/webpack-dev-server
     host: '127.0.0.1',

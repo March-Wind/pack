@@ -11,17 +11,18 @@ import setRemScript from '../plugin/setRemCode';
 import Manifest from '../plugin/webpack-manifest-plugin';
 // import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import debugConfig from './base/debug';
-
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import TerserPlugin from 'terser-webpack-plugin';
 // const smp = new SpeedMeasurePlugin();
 // import { resolve } from 'path/posix';
 // debugger
 const config = global.project_config;
 const { remotePublic } = config;
-debugger;
 const spaConfig: webpack.Configuration = {
   entry: config.entry,
   // mode: 'production',
   devtool: 'source-map',
+  // devtool: false,
   output: {
     filename: '[name].[contenthash].js',
     // path: path.resolve(process.cwd(), `pack/spa/${config.name}`),
@@ -36,17 +37,39 @@ const spaConfig: webpack.Configuration = {
     removeEmptyChunks: true,
     mergeDuplicateChunks: true,
     runtimeChunk: 'single', // 运行时需要的代码单独抽离到一个文件
-
+    minimizer: [
+      new TerserPlugin({
+        parallel: 4,
+        terserOptions: {
+          parse: {
+            ecma: 2020,
+          },
+          compress: {
+            ecma: 5,
+            comparisons: false,
+            inline: 2,
+          },
+          mangle: {
+            safari10: true,
+          },
+          output: {
+            ecma: 5,
+            comments: false,
+            ascii_only: true,
+          },
+        },
+      }),
+    ],
     splitChunks: {
-      chunks: 'all',
+      // chunks: 'all',
       // chunks: (chunk) => {
       //     console.log(chunk.name);
       //     return true
       // },
       // 默认值
-      // minSize: 2000, // 分割代码最小的大小
-      // minRemainingSize:0, // 类似于minsize,最后确保提取文件的文件打下不能小于0
-      // minChunks:1, // 至少被引用的此时，满足条件的才回去代码分割
+      minSize: 1024 * 50, // 分割代码最小的大小
+      // minRemainingSize: 500, // 类似于minsize,最后确保提取文件的文件打下不能小于0
+      // minChunks: 2, // 至少被引用的此时，满足条件的才回去代码分割
       // maxAsyncRequests: 30, // 按需加载时并行加载的文件的最大数量,如果超出会合并到其他文件中保证不超过30个,拆分文件的好处是浏览器并行加载，但是过多也不好,所以尽量保证30个。
       // maxInitialRequests: 30, // 入口文件最大并行加载请求数是30
       // enforceSizeThreshold: 500000, // 超过50kb一定会单独打包(此时会忽略minRemainingSize，maxAsyncRequests，maxInitialRequests)
@@ -62,31 +85,41 @@ const spaConfig: webpack.Configuration = {
       //         reuseExistingChunk:true
       //     }
       // }
-      minSize: 0,
-      // cacheGroups: {
-      // reactVendor: {
-      //     test: /[\\/]node_modules[\\/](react|react-dom|redux|react-redux|\@reduxjs\/toolkit|react-router|react-router-dom)[\\/]/,
-      //     name: 'react-vender',
-      //     priority: 10, //檔案的優先順序，數字越大表示優先級越高
-      //     maxSize: Infinity
-      // },
-      // otherVendor: {
-      //     test: /[\\/]node_modules[\\/]/,
-      //     name: 'other-vender',
-      //     priority: 9, //檔案的優先順序，數字越大表示優先級越高
-      //     maxSize: Infinity
-      // },
-      // commons: {
-      //     test: /src\/common\//,
-      //     name: 'commons', //分割出來的檔案命名
-      //     // minChunks: 2, //被引入2次以上的code就會被提取出來
-      //     priority: 20, //檔案的優先順序，數字越大表示優先級越高
-      //     // minChunks: 2,
-      //     // minSize: 0,
-      //     // minChunks: 0,
-      //     reuseExistingChunk: true,
-      // },
-      // },
+      // minSize: 0,
+      cacheGroups: {
+        chat: {
+          test: /[\\/]src[\\/]pages[\\/]chat[\\/]index/,
+          priority: 40,
+          name: 'chat',
+          chunks: 'all',
+          // enforce: true,
+          maxSize: 1024 * 200,
+        },
+        reactBundle: {
+          test: /[\\/]node_modules[\\/](react|react-dom|redux|react-redux|\@reduxjs\/toolkit|react-router|react-router-dom)[\\/]/,
+          name: 'react-bundle',
+          chunks: 'all',
+          priority: 30,
+          maxSize: Infinity,
+        },
+        otherVendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'other-vender',
+          priority: 20, //檔案的優先順序，數字越大表示優先級越高
+          maxSize: 1024 * 200,
+        },
+        // commons: {
+        //   test: /src\/common\//,
+        //   name: 'commons', //分割出來的檔案命名
+        //   // minChunks: 2, //被引入2次以上的code就會被提取出來
+        //   priority: 20, //檔案的優先順序，數字越大表示優先級越高
+        //   // minChunks: 2,
+        //   // minSize: 0,
+        //   // minChunks: 0,
+        //   reuseExistingChunk: true,
+        // },
+        default: false,
+      },
     },
   },
   plugins: [
@@ -107,6 +140,7 @@ const spaConfig: webpack.Configuration = {
       },
       setRemScript,
     }),
+    // new BundleAnalyzerPlugin()
     // new Manifest({
     //     generate: (seed, files, entries) => {
     //         return entries['main']
@@ -117,7 +151,6 @@ const spaConfig: webpack.Configuration = {
 // );
 
 const webpackConfig = merge(webpackBaseConfig, webpackModuleConfig, spaConfig, debugConfig, optimizationConfig);
-debugger;
 // // 合并rules 主要是合并js/jsx、ts/tsx语言的编译
 // webpackConfig = mergeWithRules({
 //     module: {

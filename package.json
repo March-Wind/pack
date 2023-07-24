@@ -1,6 +1,6 @@
 {
     "name": "@marchyang/pack",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "keywords": [
         "web development",
         "node development",
@@ -114,5 +114,9 @@
         "webpack-merge": "^5.8.0",
         "webpack-node-externals": "^3.0.0",
         "webpack-sources": "^3.2.3"
+    },
+    "devDependencies": {
+        "@types/webpack-bundle-analyzer": "^4.6.0",
+        "webpack-bundle-analyzer": "^4.9.0"
     }
 }
