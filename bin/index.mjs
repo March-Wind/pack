@@ -49,7 +49,9 @@ const {
 } = args;
 const tsNode = resolve(__dirname, "../node_modules/ts-node/register");
 const tsNodeESM = resolve(__dirname, "../node_modules/ts-node/esm");
-// const tsConfig = resolve(__dirname, "../src/webpack/tsconfig.json");
+// link的时候选择
+// const tsConfig2 = resolve(process.cwd(), "./tsconfig.json");
+console.log(1111, process.argv[1])
 const tsConfig2 = resolve(__dirname, "../tsconfig.json");
 const nodeModule = resolve(__dirname, "../node_modules");
 const preload = resolve(__dirname, './preload.cjs')

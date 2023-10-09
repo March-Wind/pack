@@ -48,3 +48,4 @@ Supports local development and bundling features for both web and node environme
 ## Notes:
 
 1. The entry file names are case-sensitive, otherwise hot reloading will not work in development mode.(文件名字大小写影响 web-dev-server 热更新)
+2. 本地开发时(作为 link 包)，dev:node 时要在项目内增加 tsconfig.json，使用的是项目内的 tsconfig.json

@@ -67,7 +67,7 @@ const webpackConfig: webpack.Configuration = {
     new webpack.DefinePlugin(definedVariable),
     // new IMake()
     // new IEmit()
-    new IThisCompilation(),
+    // new IThisCompilation(),
   ],
 };
 
