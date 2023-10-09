@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import argv from "argv";
 import shell from "shelljs";
-import { dirname, resolve } from "path";
+import path, { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -49,10 +49,10 @@ const {
 } = args;
 const tsNode = resolve(__dirname, "../node_modules/ts-node/register");
 const tsNodeESM = resolve(__dirname, "../node_modules/ts-node/esm");
-// link的时候选择
-// const tsConfig2 = resolve(process.cwd(), "./tsconfig.json");
-console.log(1111, process.argv[1])
-const tsConfig2 = resolve(__dirname, "../tsconfig.json");
+// bug: link的时候选择项目根目录的tsconfig.json，
+const tsConfig_link = resolve(process.cwd(), "./tsconfig.json");
+const link = process.argv[1] !== path.dirname(__dirname)
+const tsConfig = link ? tsConfig_link : resolve(__dirname, "../tsconfig.json");
 const nodeModule = resolve(__dirname, "../node_modules");
 const preload = resolve(__dirname, './preload.cjs')
 const _mode = mode.replace(":", "_");
@@ -106,7 +106,7 @@ if (mode === 'dev:node') {
 }
 console.log('file', file);
 // dev:node模式在这里读取配置-end
-const globalVar = `TS_NODE_PROJECT=${tsConfig2} PROJECT_CONFIG=${config} NODE_ENV=${env || NODE_ENV} NODE_MODULES_PATH=${nodeModule} MODE=${_mode} DOT_ENV=${DOT_ENV}`;
+const globalVar = `TS_NODE_PROJECT=${tsConfig} PROJECT_CONFIG=${config} NODE_ENV=${env || NODE_ENV} NODE_MODULES_PATH=${nodeModule} MODE=${_mode} DOT_ENV=${DOT_ENV}`;
 const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --experimental-wasm-modules ${mode === 'dev:node' ? `-r ${preload}` : ''} --loader ts-node/esm`;
 shell.exec(
   `${globalVar} node ${nodeParams} ${file}`
