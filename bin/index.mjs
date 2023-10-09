@@ -104,7 +104,6 @@ if (mode === 'dev:node') {
     }
   } catch (error) { /* empty */ }
 }
-console.log('file', file);
 // dev:node模式在这里读取配置-end
 const globalVar = `TS_NODE_PROJECT=${tsConfig} PROJECT_CONFIG=${config} NODE_ENV=${env || NODE_ENV} NODE_MODULES_PATH=${nodeModule} MODE=${_mode} DOT_ENV=${DOT_ENV}`;
 const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --experimental-wasm-modules ${mode === 'dev:node' ? `-r ${preload}` : ''} --loader ts-node/esm`;
