@@ -44,7 +44,7 @@ const _readFileSnyc = (path: string, options?: Parameters<typeof readFileSync>[1
  * @return {*}
  */
 const readJsFileSnyc = (path: string) => {
-  let content;
+  let content = {};
   try {
     content = require(path);
   } catch (error) {

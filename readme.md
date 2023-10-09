@@ -28,10 +28,23 @@ Supports local development and bundling features for both web and node environme
 | dev:node   | src/app.ts  |
 | build:node | src/app.ts  |
 
+3. 在项目根目录增加 pack.config.cjs 可以覆盖默认配置，同时可以设置 config 来指定配置文件路径，同时能覆盖默认配置
+
+   ```
+   module.exports = {
+      dev_node: {
+        entry: './src/app.ts',
+      },
+      build_node: {
+        entry: './src/app.ts',
+      },
+   };
+   ```
+
 ## Support
 
 1. Support `dotenv` and differentiate between environments, using ` --DOT_ENV=test` will load the `. env. test` file
 
 ## Notes:
 
-1. The entry file names are case-sensitive, otherwise hot reloading will not work in development mode.
+1. The entry file names are case-sensitive, otherwise hot reloading will not work in development mode.(文件名字大小写影响 web-dev-server 热更新)

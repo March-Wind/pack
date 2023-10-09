@@ -3,7 +3,8 @@ import argv from "argv";
 import shell from "shelljs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
-
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 argv.option([
@@ -80,7 +81,29 @@ const execConfig = modeMapConfig[mode];
 if (!execConfig) {
   throw new Error("没有对应的mode");
 }
-const { file, NODE_ENV } = execConfig;
+const { NODE_ENV } = execConfig;
+let { file } = execConfig;
+// dev:node模式在这里读取配置-start
+if (mode === 'dev:node') {
+  const userConfigFile = config;
+  // 最终的配置文件
+  let finalConfigFile = resolve(process.cwd(), `pack.config.cjs`);
+  if (userConfigFile?.startsWith('/')) {// 绝对路径
+    finalConfigFile = userConfigFile;
+  }
+  if (userConfigFile?.startsWith('./')) {// 相对路径
+    finalConfigFile = resolve(process.cwd(), userConfigFile);
+  }
+  try {
+    const content = require(finalConfigFile);
+    const _mode = mode.replace(':', '_')
+    if (content && content[_mode]) {
+      file = content[_mode].entry
+    }
+  } catch (error) { /* empty */ }
+}
+console.log('file', file);
+// dev:node模式在这里读取配置-end
 const globalVar = `TS_NODE_PROJECT=${tsConfig2} PROJECT_CONFIG=${config} NODE_ENV=${env || NODE_ENV} NODE_MODULES_PATH=${nodeModule} MODE=${_mode} DOT_ENV=${DOT_ENV}`;
 const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --experimental-wasm-modules ${mode === 'dev:node' ? `-r ${preload}` : ''} --loader ts-node/esm`;
 shell.exec(

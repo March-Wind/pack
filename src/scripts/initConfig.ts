@@ -30,11 +30,22 @@ const defaultOptionsMap = {
   },
 };
 const defaultOptions = defaultOptionsMap[process.env.MODE as keyof typeof defaultOptionsMap];
-const content = readJsFileSnyc(path.resolve(process.cwd(), `pack.config.cjs`));
+const userConfigFile = process.env.PROJECT_CONFIG;
+// 最终的配置文件
+let finalConfigFile = path.resolve(process.cwd(), `pack.config.cjs`);
+if (userConfigFile?.startsWith('/')) {
+  // 绝对路径
+  finalConfigFile = userConfigFile;
+}
+if (userConfigFile?.startsWith('./')) {
+  // 相对路径
+  finalConfigFile = path.resolve(process.cwd(), userConfigFile);
+}
+const content = readJsFileSnyc(finalConfigFile);
 if (isObject(content)) {
   global.project_config = {
     ...defaultOptions,
-    ...content,
+    ...content[process.env.MODE as keyof typeof defaultOptionsMap],
   };
 } else {
   global.project_config = defaultOptions;

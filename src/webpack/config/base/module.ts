@@ -300,9 +300,18 @@ const iModule: webpack.Configuration = {
                     options: {
                       prettier: false,
                       // svgo: true,
-                      // svgoConfig: {
-                      //   plugins: [{ removeViewBox: true, active: false }],
-                      // },
+                      svgoConfig: {
+                        plugins: [
+                          {
+                            name: 'preset-default',
+                            params: {
+                              overrides: {
+                                removeViewBox: false,
+                              },
+                            },
+                          },
+                        ],
+                      },
                       titleProp: true,
                     },
                   },

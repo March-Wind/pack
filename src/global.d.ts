@@ -10,6 +10,7 @@ declare global {
       NODE_ENV: 'development' | 'production';
       NODE_MODULES_PATH: string;
       MODE: string;
+      PROJECT_CONFIG?: string;
       // 在这里定义其他的环境变量和类型
     }
   }
