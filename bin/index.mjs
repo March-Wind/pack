@@ -49,9 +49,9 @@ const {
 } = args;
 const tsNode = resolve(__dirname, "../node_modules/ts-node/register");
 const tsNodeESM = resolve(__dirname, "../node_modules/ts-node/esm");
-// bug: link的时候选择项目根目录的tsconfig.json，
+// bug: dev:node时link的时候选择项目根目录的tsconfig.json，
 const tsConfig_link = resolve(process.cwd(), "./tsconfig.json");
-const link = process.argv[1] !== path.dirname(__dirname)
+const link = false;
 const tsConfig = link ? tsConfig_link : resolve(__dirname, "../tsconfig.json");
 const nodeModule = resolve(__dirname, "../node_modules");
 const preload = resolve(__dirname, './preload.cjs')

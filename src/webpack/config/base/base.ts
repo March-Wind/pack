@@ -9,7 +9,7 @@ const { globalVariable = {} } = config;
 const NODE_ENV = process.env.NODE_ENV;
 const _path = process.env.DOT_ENV ? resolve(process.cwd(), `.env.${process.env.DOT_ENV}`) : undefined;
 const dotenvVariable = dotenv.config({ path: _path }).parsed;
-
+const projectMode = process.env.MODE;
 const definedVariable = Object.keys({ ...dotenvVariable, ...globalVariable }).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify({ ...dotenvVariable, ...globalVariable }[next]);
   return prev;
@@ -45,23 +45,31 @@ const webpackConfig: webpack.Configuration = {
     // roots: [resolve(process.cwd(), 'node_modules'), resolve(__dirname, '../../../node_modules')]
     roots: [resolve(process.cwd(), 'node_modules'), process.env.NODE_MODULES_PATH],
   },
-  performance: {
-    // 新增性能优化
-    maxEntrypointSize: 3072000, // 入口文件大小，推荐244k
-  },
+  ...(projectMode === 'build_node'
+    ? {}
+    : {
+        performance: {
+          // 新增性能优化
+          maxEntrypointSize: 3072000, // 入口文件大小，推荐244k
+        },
+      }),
   stats: {
     colors: true,
   },
-  optimization: {
-    concatenateModules: true,
-    runtimeChunk: true,
-    splitChunks: {
-      chunks: 'all',
-      name: 'vendors',
-      minSize: 102400, //byte   1KB=1024B=1024byte=8192bit。
-      maxSize: 204800, //byte
-    },
-  },
+  ...(projectMode === 'build_node'
+    ? {}
+    : {
+        optimization: {
+          concatenateModules: true,
+          runtimeChunk: true,
+          splitChunks: {
+            chunks: 'all',
+            name: 'vendors',
+            minSize: 102400, //byte   1KB=1024B=1024byte=8192bit。
+            maxSize: 204800, //byte
+          },
+        },
+      }),
   module: {},
   plugins: [
     new webpack.DefinePlugin(definedVariable),
