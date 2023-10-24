@@ -344,6 +344,10 @@ const iModule: webpack.Configuration = {
             },
           },
           // {
+          //   test: /\.wasm$/,
+          //   type: 'webassembly/sync',
+          // }
+          // {
           //   test: /\.(woff|svg|otf|eot|ttf)$/,
           //   // loader: 'url-loader',
           //   // options: {
