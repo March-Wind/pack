@@ -1,0 +1,16 @@
+1. processAssets[SyncHook]：asset 处理.在这个模块前已经完成解析模块，穿件模块依赖图，生成代码等等，在这个钩子之后会输出文件，生成 sourcemap。处理阶段有
+   - PROCESS_ASSETS_STAGE_ADDITIONAL— 在编译中添加额外的 asset。
+   - PROCESS_ASSETS_STAGE_PRE_PROCESS — asset 进行了基础预处理。
+   - PROCESS_ASSETS_STAGE_DERIVED — 从已有 asset 中获取新的 asset。
+   - PROCESS_ASSETS_STAGE_ADDITIONS — 为现有的 asset 添加额外的内容，例如 banner 或初始代码。
+   - PROCESS_ASSETS_STAGE_OPTIMIZE — 以通用的方式优化已有 asset。
+   - PROCESS_ASSETS_STAGE_OPTIMIZE_COUNT — 优化现有资产的数量，例如，进行合并操作。
+   - PROCESS_ASSETS_STAGE_OPTIMIZE_COMPATIBILITY — 优化现有 asset 兼容性，例如添加 polyfills 或者 vendor prefixes。
+   - PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE — 优化现有 asset 大小，例如进行压缩或者删除空格。
+   - PROCESS_ASSETS_STAGE_DEV_TOOLING — 为 asset 添加开发者工具，例如，提取 source map。
+   - PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE 5.8.0+ — 优化已有 asset 数量，例如，通过将 asset 内联到其他 asset 中。
+   - PROCESS_ASSETS_STAGE_SUMMARIZE — 整理现有 asset 列表。
+   - PROCESS_ASSETS_STAGE_OPTIMIZE_HASH — 优化 asset 的 hash 值，例如，生成 asset 内容的真实 hash 值。
+   - PROCESS_ASSETS_STAGE_OPTIMIZE_TRANSFER — 优化已有 asset 的转换操作，例如对 asset 进行压缩，并作为独立的 asset。
+   - PROCESS_ASSETS_STAGE_ANALYSE — 分析已有 asset。
+   - PROCESS_ASSETS_STAGE_REPORT — 创建用于上报的 asset。

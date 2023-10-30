@@ -1,5 +1,6 @@
-import webpack from 'webpack';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import webpack from 'webpack';
 import { merge, mergeWithRules } from 'webpack-merge';
 import webpackBaseConfig from './base/base';
 import webpackModuleConfig from './base/module';
@@ -8,6 +9,11 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import nodeExternals from 'webpack-node-externals';
 import optimizationConfig from './base/optimization';
 import ModTiktokenEntry from '../plugin/resolve.plugin/modTiktokenEntry';
+import CopyPlugin from 'copy-webpack-plugin';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const config = global.project_config;
 const ssrConfig: webpack.Configuration = {
   entry: config.entry,
@@ -47,6 +53,9 @@ const ssrConfig: webpack.Configuration = {
     new webpack.BannerPlugin({
       banner: '#!/usr/bin/env node',
       raw: true,
+    }),
+    new CopyPlugin({
+      patterns: [{ from: path.resolve(__dirname, '../plugin/ecosystem.config.js'), to: defaultOutput }],
     }),
   ],
 };
