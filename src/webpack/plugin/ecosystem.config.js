@@ -5,7 +5,7 @@ module.exports = {
       name: 'chat_server',
       script: './main.cjs',
       env: {
-        OPENAI_API_KEY: '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',
+        OPENAI_API_KEY: process.env.OPENAI_API_KEY,
       },
       // 可以启动多个实例来处理高并发，
       instances: 1,

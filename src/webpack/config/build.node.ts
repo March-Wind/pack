@@ -10,6 +10,7 @@ import nodeExternals from 'webpack-node-externals';
 import optimizationConfig from './base/optimization';
 import ModTiktokenEntry from '../plugin/resolve.plugin/modTiktokenEntry';
 import CopyPlugin from 'copy-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

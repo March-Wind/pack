@@ -101,6 +101,7 @@
         "style-loader": "^3.3.2",
         "stylelint-config-prettier": "^9.0.5",
         "stylelint-prettier": "^3.0.0",
+        "terser-webpack-plugin": "^5.3.9",
         "ts-jest": "^29.1.0",
         "ts-node": "^10.9.1",
         "tsc-alias": "^1.8.2",
