@@ -53,9 +53,9 @@ const webpackConfig: webpack.Configuration = {
           maxEntrypointSize: 3072000, // 入口文件大小，推荐244k
         },
       }),
-  stats: {
-    colors: true,
-  },
+  // stats: {
+  //   colors: true,
+  // },
   ...(projectMode === 'build_node'
     ? {}
     : {
