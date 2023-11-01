@@ -6,6 +6,8 @@ module.exports = {
       script: './main.cjs',
       env: {
         OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+        OPENAI_API_KEY_35: process.env.OPENAI_API_KEY_35,
+        OPENAI_API_KEY_40: process.env.OPENAI_API_KEY_40,
       },
       // 可以启动多个实例来处理高并发，
       instances: 1,
