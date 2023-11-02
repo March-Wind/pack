@@ -22,7 +22,8 @@ module.exports = {
       out_file: './logs/out_file.log', // 文件路径一定要设置
       error_file: './logs/error_file.log',
       time: true, // 日志前加上时间
-      merge_logs: false,
+      merge_logs: true, // 用于在运行多个进程时，将日志文件合并到一个文件中
+      log_date_format: 'YYYY-MM-DD HH:mm Z',
       /**日志参数-end */
     },
   ],
