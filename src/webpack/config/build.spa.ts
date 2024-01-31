@@ -20,7 +20,7 @@ const config = global.project_config;
 const { remotePublic } = config;
 const spaConfig: webpack.Configuration = {
   entry: config.entry,
-  // mode: 'production',
+  mode: 'production',
   devtool: 'source-map',
   // devtool: false,
   output: {

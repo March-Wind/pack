@@ -14,12 +14,12 @@ const config = global.project_config;
 const devConfig: webpack.Configuration & Configuration = {
   // entry: './src/index.tsx',
   entry: config.entry,
-  // mode: 'development',
+  mode: 'development',
   devtool: 'source-map',
   output: {
     filename: '[name].[contenthash].js',
     path: defaultOutput, // /${projectConfig.name}
-    // publicPath: '/pack'
+    // publicPath: 'chat_web'
   },
   target: 'web',
   devServer: {
@@ -57,6 +57,15 @@ const devConfig: webpack.Configuration & Configuration = {
         // 覆盖页面错误
         errors: true,
         warnings: false,
+      },
+    },
+    // 代理静态资源
+    proxy: {
+      [`/${config.name}`]: {
+        target: 'http://127.0.0.1:4000',
+        pathRewrite: {
+          [`^/${config.name}`]: '',
+        },
       },
     },
     // static: {
