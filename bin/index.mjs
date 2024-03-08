@@ -52,7 +52,7 @@ const tsNodeESM = resolve(__dirname, "../node_modules/ts-node/esm");
 // bug: dev:node时link的时候选择项目根目录的tsconfig.json，
 const tsConfig_link = resolve(process.cwd(), "./tsconfig.json");
 const link = false;
-const tsConfig = link ? tsConfig_link : resolve(__dirname, "../tsconfig.json");
+const tsConfig = link || (mode === 'dev:node') ? tsConfig_link : resolve(__dirname, "../tsconfig.json");
 const nodeModule = resolve(__dirname, "../node_modules");
 const preload = resolve(__dirname, './preload.cjs')
 const _mode = mode.replace(":", "_");
@@ -106,7 +106,7 @@ if (mode === 'dev:node') {
 }
 // dev:node模式在这里读取配置-end
 const globalVar = `TS_NODE_PROJECT=${tsConfig} PROJECT_CONFIG=${config} NODE_ENV=${env || NODE_ENV} NODE_MODULES_PATH=${nodeModule} MODE=${_mode} DOT_ENV=${DOT_ENV}`;
-const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --experimental-wasm-modules ${mode === 'dev:node' ? `-r ${preload}` : ''} --loader ts-node/esm`;
+const nodeParams = `${debug ? '--inspect-brk=9222' : ''} --experimental-wasm-modules ${mode === 'dev:node' ? `-r ${preload}` : ''} --loader @marchyang/pack/bin/ts-node-esm_alias-loader.js`
 shell.exec(
   `${globalVar} node ${nodeParams} ${file}`
 );

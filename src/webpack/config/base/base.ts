@@ -25,6 +25,9 @@ const webpackConfig: webpack.Configuration = {
     // modules: [resolve(process.cwd(), 'node_modules'), resolve(__dirname, '../../../node_modules')],
     modules: [resolve(process.cwd(), 'node_modules'), process.env.NODE_MODULES_PATH],
     extensions: ['.tsx', '.ts', '.js', 'jsx'],
+    alias: {
+      "@": resolve(process.cwd(), "./src"),
+    }
     /***
      * 根据condition export 来选择优选哪种模块，https://nodejs.org/api/packages.html#conditional-exports
      * 针对@dqbd/tiktoken包package.json里面这种配置，将优先使用tiktoken.js，也就是default。
@@ -48,28 +51,28 @@ const webpackConfig: webpack.Configuration = {
   ...(projectMode === 'build_node'
     ? {}
     : {
-        performance: {
-          // 新增性能优化
-          maxEntrypointSize: 3072000, // 入口文件大小，推荐244k
-        },
-      }),
+      performance: {
+        // 新增性能优化
+        maxEntrypointSize: 3072000, // 入口文件大小，推荐244k
+      },
+    }),
   // stats: {
   //   colors: true,
   // },
   ...(projectMode === 'build_node'
     ? {}
     : {
-        optimization: {
-          concatenateModules: true,
-          runtimeChunk: true,
-          splitChunks: {
-            chunks: 'all',
-            name: 'vendors',
-            minSize: 102400, //byte   1KB=1024B=1024byte=8192bit。
-            maxSize: 204800, //byte
-          },
+      optimization: {
+        concatenateModules: true,
+        runtimeChunk: true,
+        splitChunks: {
+          chunks: 'all',
+          name: 'vendors',
+          minSize: 102400, //byte   1KB=1024B=1024byte=8192bit。
+          maxSize: 204800, //byte
         },
-      }),
+      },
+    }),
   module: {},
   plugins: [
     new webpack.DefinePlugin(definedVariable),
