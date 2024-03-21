@@ -17,7 +17,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 // import { resolve } from 'path/posix';
 // debugger
 const config = global.project_config;
-const { remotePublic } = config;
+// const { remotePublic } = config;
 const spaConfig: webpack.Configuration = {
   entry: config.entry,
   mode: 'production',
@@ -30,7 +30,7 @@ const spaConfig: webpack.Configuration = {
     chunkFilename: '[name].[contenthash].js',
     // importFunctionName: '__import__',
     clean: true,
-    publicPath: remotePublic || '',
+    publicPath: `/${config.name}/` || '',
   },
   optimization: {
     // chunkIds: "named", // 按照路经命名，用于调试模式

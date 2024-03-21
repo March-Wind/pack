@@ -19,7 +19,7 @@ const devConfig: webpack.Configuration & Configuration = {
   output: {
     filename: '[name].[contenthash].js',
     path: defaultOutput, // /${projectConfig.name}
-    // publicPath: 'chat_web'
+    // publicPath: `/${config.name}/`,
   },
   target: 'web',
   devServer: {
@@ -47,6 +47,7 @@ const devConfig: webpack.Configuration & Configuration = {
     },
     historyApiFallback: {
       disableDotRule: true,
+      // index: `/${config.name}/index.html`
     },
     // stats:{
     //   colors:true
